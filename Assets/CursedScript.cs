@@ -40,8 +40,13 @@ public class CursedScript : MonoBehaviour {
 
     void Start()
     {
-        if (bomb.GetModuleNames().Contains("Hickory Dickory Dock") && availableCurses.Contains(3))
-            availableCurses.Remove(3);
+        if (availableCurses.Contains(3))
+        {
+            var modules = bomb.GetModuleNames();
+            var ignored = GetComponent<KMBossModule>().GetIgnoredModules("Cursed", new string[] { "Hickory Dickory Dock" });
+            if (ignored.Any(modules.Contains))
+                availableCurses.Remove(3);
+        }
         if (availableCurses.Count > 0)
         {
             chosenCurse = availableCurses.PickRandom();
@@ -113,7 +118,7 @@ public class CursedScript : MonoBehaviour {
             for (int i = 0; i < transform.parent.childCount; i++)
             {
                 Transform componentTransform = transform.parent.GetChild(i);
-                if ((transform.parent.GetChild(i).GetComponent<KMBombModule>() != null && transform.parent.GetChild(i).GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || transform.parent.GetChild(i).GetComponent<KMNeedyModule>() != null)
+                if ((componentTransform.GetComponent<KMBombModule>() != null && componentTransform.GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || componentTransform.GetComponent<KMNeedyModule>() != null)
                 {
                     GameObject qMark = Instantiate(curseOfTheBlind, componentTransform.parent);
                     qMark.transform.localPosition = componentTransform.localPosition;
