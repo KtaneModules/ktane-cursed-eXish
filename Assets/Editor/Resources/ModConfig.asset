@@ -17,14 +17,21 @@ MonoBehaviour:
   description: 'Receive a Binding of Isaac like curse for the duration of your bomb.
 
 
+    Dear mission makers, if you wish to configure your mission to only have specific
+    curses available then put the following in your mission description removing the
+    curses you wish to ban:
+
+    [Cursed] blind,dark,unknown,maze
+
+
     HTML: https://ktane.timwi.de/HTML/Cursed.html
 
     PDF: https://ktane.timwi.de/PDF/Cursed.pdf
 
 
-    Cursed (cursedModule) v1.0.1
+    Cursed (cursedModule) v1.0.2
 
     Module and Concept by eXish'
-  version: 1.0.1
+  version: 1.0.2
   outputFolder: build
   previewImage: {fileID: 2800000, guid: 432d75a5abc8b82408da783ced2ae411, type: 3}
