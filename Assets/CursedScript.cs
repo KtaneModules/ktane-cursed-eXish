@@ -42,7 +42,7 @@ public class CursedScript : MonoBehaviour {
         string missionDesc = KTMissionGetter.Mission.Description;
         if (missionDesc != null)
         {
-            Regex regex = new Regex(@"\[Cursed\] ((blind|dark|unknown|maze), *){3}(blind|dark|unknown|maze)");
+            Regex regex = new Regex(@"\[Cursed\] (blind|dark|unknown|maze)(, *(blind|dark|unknown|maze))?(, *(blind|dark|unknown|maze))?(, *(blind|dark|unknown|maze))?");
             var match = regex.Match(missionDesc);
             if (match.Success)
             {
