@@ -137,23 +137,7 @@ public class CursedScript : MonoBehaviour {
     {
         if (chosenCurse == 0)
         {
-            blindDict = new Dictionary<string, Transform[]>();
-            int ct = 0;
-            for (int i = 0; i < transform.parent.childCount; i++)
-            {
-                Transform componentTransform = transform.parent.GetChild(i);
-                if ((componentTransform.GetComponent<KMBombModule>() != null && componentTransform.GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || componentTransform.GetComponent<KMNeedyModule>() != null)
-                {
-                    GameObject qMark = Instantiate(curseOfTheBlind, componentTransform.parent);
-                    qMark.transform.localPosition = componentTransform.localPosition;
-                    qMark.transform.localEulerAngles = componentTransform.localEulerAngles;
-                    qMark.GetComponent<Collider>().name = "CurseOfTheBlind" + ct;
-                    blindDict.Add(qMark.GetComponent<Collider>().name, new Transform[] { componentTransform, qMark.transform.GetChild(0) });
-                    componentTransform.localScale = new Vector3(0, 0, 0);
-                    ct++;
-                }
-            }
-            Debug.LogFormat("<Cursed #{0}> Added blindness effect to {1} modules", moduleId, ct);
+            StartCoroutine(BlindWithDelay());
         }
     }
 
@@ -292,5 +276,27 @@ public class CursedScript : MonoBehaviour {
                 }
             }
         }
+    }
+
+    IEnumerator BlindWithDelay()
+    {
+        yield return null;
+        blindDict = new Dictionary<string, Transform[]>();
+        int ct = 0;
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            Transform componentTransform = transform.parent.GetChild(i);
+            if ((componentTransform.GetComponent<KMBombModule>() != null && componentTransform.GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || componentTransform.GetComponent<KMNeedyModule>() != null)
+            {
+                GameObject qMark = Instantiate(curseOfTheBlind, componentTransform.parent);
+                qMark.transform.localPosition = componentTransform.localPosition;
+                qMark.transform.localEulerAngles = componentTransform.localEulerAngles;
+                qMark.GetComponent<Collider>().name = "CurseOfTheBlind" + ct;
+                blindDict.Add(qMark.GetComponent<Collider>().name, new Transform[] { componentTransform, qMark.transform.GetChild(0) });
+                componentTransform.localScale = new Vector3(0, 0, 0);
+                ct++;
+            }
+        }
+        Debug.LogFormat("<Cursed #{0}> Added blindness effect to {1} modules", moduleId, ct);
     }
 }
