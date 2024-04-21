@@ -275,7 +275,8 @@ public class CursedScript : MonoBehaviour {
 
     IEnumerator BlindWithDelay()
     {
-        yield return null;
+        for (int i = 0; i < 5; i++)
+            yield return null;
         blindDict = new Dictionary<string, Transform[]>();
         int ct = 0;
         for (int i = 0; i < transform.parent.childCount; i++)
