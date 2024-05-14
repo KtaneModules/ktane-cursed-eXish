@@ -23,6 +23,7 @@ public class CursedScript : MonoBehaviour {
     private Text tweaksStrikeTextClone;
 
     private static Dictionary<string, Transform[]> blindDict;
+    private string[] vanillaNames = { "WireSequenceComponent(Clone)", "WireSetComponent(Clone)", "WhosOnFirstComponent(Clone)", "NeedyVentComponent(Clone)", "SimonComponent(Clone)", "PasswordComponent(Clone)", "MorseComponent(Clone)", "MemoryComponent(Clone)", "InvisibleWallsComponent(Clone)", "NeedyKnobComponent(Clone)", "KeypadComponent(Clone)", "VennWiresComponent(Clone)", "ButtonComponent(Clone)", "NeedyDischargeComponent(Clone)" };
     private string hoveredCollider = null;
 
     private static Type selectableType = ReflectionHelper.FindType("Selectable", "Assembly-CSharp");
@@ -286,7 +287,7 @@ public class CursedScript : MonoBehaviour {
         for (int i = 0; i < transform.parent.childCount; i++)
         {
             Transform componentTransform = transform.parent.GetChild(i);
-            if ((componentTransform.GetComponent<KMBombModule>() != null && componentTransform.GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || componentTransform.GetComponent<KMNeedyModule>() != null)
+            if ((componentTransform.GetComponent<KMBombModule>() != null && componentTransform.GetComponent<KMBombModule>().ModuleDisplayName != "Cursed") || componentTransform.GetComponent<KMNeedyModule>() != null || vanillaNames.Contains(componentTransform.gameObject.name))
             {
                 GameObject qMark = Instantiate(curseOfTheBlind, componentTransform.parent);
                 qMark.transform.localPosition = componentTransform.localPosition;
