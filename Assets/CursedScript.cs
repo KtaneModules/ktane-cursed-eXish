@@ -147,15 +147,21 @@ public class CursedScript : MonoBehaviour {
         if (chosenCurse == 0)
         {
             RaycastHit[] allHit = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
+            float dist = 99999999;
+            int index = -1;
             for (int i = 0; i < allHit.Length; i++)
             {
-                if (hoveredCollider == null && allHit[i].collider.name.StartsWith("CurseOfTheBlind"))
+                if (hoveredCollider == null && allHit[i].collider.name.StartsWith("CurseOfTheBlind") && Vector3.Distance(Camera.main.transform.position, allHit[i].transform.position) < dist)
                 {
-                    blindDict[allHit[i].collider.name][0].localScale = new Vector3(1, 1, 1);
-                    blindDict[allHit[i].collider.name][1].gameObject.SetActive(false);
-                    hoveredCollider = allHit[i].collider.name;
-                    break;
+                    dist = Vector3.Distance(Camera.main.transform.position, allHit[i].transform.position);
+                    index = i;
                 }
+            }
+            if (index != -1)
+            {
+                blindDict[allHit[index].collider.name][0].localScale = new Vector3(1, 1, 1);
+                blindDict[allHit[index].collider.name][1].gameObject.SetActive(false);
+                hoveredCollider = allHit[index].collider.name;
             }
             if (hoveredCollider != null)
             {
