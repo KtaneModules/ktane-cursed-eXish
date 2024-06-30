@@ -151,35 +151,28 @@ public class CursedScript : MonoBehaviour {
             int index = -1;
             for (int i = 0; i < allHit.Length; i++)
             {
-                if (hoveredCollider == null && allHit[i].collider.name.StartsWith("CurseOfTheBlind") && Vector3.Distance(Camera.main.transform.position, allHit[i].transform.position) < dist)
+                if (allHit[i].collider.name.StartsWith("CurseOfTheBlind") && allHit[i].distance < dist)
                 {
-                    dist = Vector3.Distance(Camera.main.transform.position, allHit[i].transform.position);
+                    dist = allHit[i].distance;
                     index = i;
                 }
             }
             if (index != -1)
             {
+                if (hoveredCollider != null)
+                {
+                    blindDict[hoveredCollider][0].localScale = new Vector3(0, 0, 0);
+                    blindDict[hoveredCollider][1].gameObject.SetActive(true);
+                }
                 blindDict[allHit[index].collider.name][0].localScale = new Vector3(1, 1, 1);
                 blindDict[allHit[index].collider.name][1].gameObject.SetActive(false);
                 hoveredCollider = allHit[index].collider.name;
             }
-            if (hoveredCollider != null)
+            else if (hoveredCollider != null)
             {
-                bool found = false;
-                for (int i = 0; i < allHit.Length; i++)
-                {
-                    if (allHit[i].collider.name == hoveredCollider)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    blindDict[hoveredCollider][0].localScale = new Vector3(0, 0, 0);
-                    blindDict[hoveredCollider][1].gameObject.SetActive(true);
-                    hoveredCollider = null;
-                }
+                blindDict[hoveredCollider][0].localScale = new Vector3(0, 0, 0);
+                blindDict[hoveredCollider][1].gameObject.SetActive(true);
+                hoveredCollider = null;
             }
         }
     }
